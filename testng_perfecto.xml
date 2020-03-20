@@ -16,8 +16,8 @@
 		</classes>
 	</test> <!-- Test -->
 	<test name="iphone11" enabled="true">
-		<parameter name="model" value="iPhone.*"></parameter>
-		<parameter name="version" value="11.*"></parameter>
+		<parameter name="model" value="iPhone-6"></parameter>
+		<parameter name="version" value="11.3"></parameter>
 		<classes>
 			<class name="com.perfecto.sampleproject.ClearHistoryiOS" />
 		</classes>

@@ -22,7 +22,7 @@ import com.perfecto.reportium.test.result.TestResultFactory;
 import io.appium.java_client.ios.IOSDriver;
 
 public class ClearHistoryiOS {
-	IOSDriver<WebElement>  driver;
+	IOSDriver  driver;
 	ReportiumClient reportiumClient;
 
 
@@ -42,7 +42,7 @@ public class ClearHistoryiOS {
 		//		capabilities.setCapability("openDeviceTimeout", 2);
 		capabilities.setCapability("bundleId", "com.apple.Preferences");
 		try {
-			driver = new IOSDriver<>(new URL("https://" + Utils.fetchCloudName(cloudName)  + ".perfectomobile.com/nexperience/perfectomobile/wd/hub"), capabilities); 
+			driver = new IOSDriver(new URL("https://" + Utils.fetchCloudName(cloudName)  + ".perfectomobile.com/nexperience/perfectomobile/wd/hub"), capabilities); 
 		}catch(Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -66,6 +66,8 @@ public class ClearHistoryiOS {
 		reportiumClient = new ReportiumClientFactory().createPerfectoReportiumClient(perfectoExecutionContext);
 
 		reportiumClient.testStart("Clear History", new TestContext("tag2", "tag3"));
+
+		Utils.closeTabs(driver);
 		Utils.clearHistoryiOS(driver);
 	}
 

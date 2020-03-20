@@ -2,6 +2,7 @@ package com.perfecto.sampleproject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DriverCommand;
@@ -11,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
 
 public class Utils {
@@ -51,22 +53,24 @@ public class Utils {
 		Map<String, Object> params = new HashMap<>();
 		params.put("identifier", "com.apple.Preferences");
 		driver.executeScript("mobile:application:open", params);
-		params.clear();
-		params.put("start", "20%,40%");
-		params.put("end", "15%,60%");
-		params.put("duration", "1");
-		driver.executeScript("mobile:touch:swipe", params);
-		switchToContext(driver, "NATIVE_APP");
 		Map<String, Object> pars = new HashMap<>();
 		pars.put("children", 4);
 		driver.executeScript("mobile:objects.optimization:start", pars);
+		params.clear();
+		params.put("start", "20%,30%");
+		params.put("end", "15%,90%");
+		params.put("duration", "1");
+		driver.executeScript("mobile:touch:swipe", params);
+		switchToContext(driver, "NATIVE_APP");
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		WebElement search = driver.findElementByXPath("//XCUIElementTypeSearchField[@label='Search' or @value='Settings' and @enabled='true']");
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		wait.until(ExpectedConditions.visibilityOf(search)).click();
 		wait.until(ExpectedConditions.elementToBeClickable(search)).sendKeys("Safari");
 		wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("(//XCUIElementTypeStaticText[@label='Safari'])[last()]"))).click();
 
 		if(deviceInfo(driver, "model").contains("iPad")){
-            driver.findElementByXPath("//*[@label='Cancel']").click();
+			driver.findElementByXPath("//*[@label='Cancel']").click();
 		}
 		params.clear();
 		params.put("content", "Clear History");
@@ -89,13 +93,58 @@ public class Utils {
 		Map<String, Object> pars2 = new HashMap<>();
 		driver.executeScript("mobile:objects.optimization:stop", pars2);
 	}
-	
+
 	private static void switchToContext(RemoteWebDriver driver, String context) {
 		RemoteExecuteMethod executeMethod = new RemoteExecuteMethod(driver);
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("name", context); //
 		executeMethod.execute(DriverCommand.SWITCH_TO_CONTEXT, params);
 	}
-	
+
+	public static void closeTabs(IOSDriver driver) {
+		try{
+			Map<String, Object> params = new HashMap<>();
+			params.put("identifier", "com.apple.mobilesafari");
+			driver.executeScript("mobile:application:close", params);
+		}catch(Exception e){}
+		Map<String, Object> params = new HashMap<>();
+		params.put("identifier", "com.apple.mobilesafari");
+		driver.executeScript("mobile:application:open", params);
+
+		int i = 0;
+		while(i <1) {
+			switchToContext(driver, "NATIVE_APP");
+			WebElement browserTab = driver.findElementByXPath("//*[@label=\"Tabs\"]");
+			TouchAction action = new TouchAction(driver);
+			action.longPress(browserTab).press(browserTab);
+			action.perform();
+			action.longPress(browserTab).release();
+			action.perform();
+			try {
+				driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+				WebElement closeAll = driver.findElementByXPath("//*[contains(@label,'Close All') and @visible='true']");
+				closeAll.click();
+				if (!deviceInfo(driver, "model").contains("iPad")) {
+					params.clear();
+					params.put("label", "Close All");
+					params.put("threshold", 90);
+					params.put("index", "2");
+					params.put("timeout", "5");
+					params.put("ignorecase", "nocase");
+					driver.executeScript("mobile:button-text:click", params);
+				}
+			} catch (Exception e) {
+				break;
+			}
+			i++;
+		}
+		try{
+			params = new HashMap<>();
+			params.put("identifier", "com.apple.mobilesafari");
+			driver.executeScript("mobile:application:close", params);
+		}catch(Exception e){}
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+	}
+
 }
 
