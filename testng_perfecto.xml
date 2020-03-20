@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="tests">
+	<test name="ipad13" enabled="true">
+		<parameter name="model" value="iPad.*"></parameter>
+		<parameter name="version" value=".*"></parameter>
+		<classes>
+			<class name="com.perfecto.sampleproject.ClearHistoryiOS" />
+		</classes>
+	</test> <!-- Test -->
+	<test name="iphone10" enabled="false">
+		<parameter name="model" value="iPhone.*"></parameter>
+		<parameter name="version" value="10.*"></parameter>
+		<classes>
+			<class name="com.perfecto.sampleproject.ClearHistoryiOS" />
+		</classes>
+	</test> <!-- Test -->
+	<test name="iphone11" enabled="true">
+		<parameter name="model" value="iPhone.*"></parameter>
+		<parameter name="version" value="11.*"></parameter>
+		<classes>
+			<class name="com.perfecto.sampleproject.ClearHistoryiOS" />
+		</classes>
+	</test> <!-- Test -->
+	<test name="iphone12" enabled="true">
+		<parameter name="model" value="iPhone.*"></parameter>
+		<parameter name="version" value="12.*"></parameter>
+		<classes>
+			<class name="com.perfecto.sampleproject.ClearHistoryiOS" />
+		</classes>
+	</test> <!-- Test -->
+	<test name="iphone13" enabled="false">
+		<parameter name="model" value="iPhone.*"></parameter>
+		<parameter name="version" value="13.*"></parameter>
+		<classes>
+			<class name="com.perfecto.sampleproject.ClearHistoryiOS" />
+		</classes>
+	</test> <!-- Test -->
+
+
+</suite> <!-- Suite -->
