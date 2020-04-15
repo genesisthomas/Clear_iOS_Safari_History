@@ -39,6 +39,7 @@ public class ClearHistoryiOS {
 		capabilities.setCapability("platform", "iOS");
 		capabilities.setCapability("model", model);
 		capabilities.setCapability("platformVersion", version);
+		capabilities.setCapability("baseAppiumBehavior", "YES");
 		//		capabilities.setCapability("openDeviceTimeout", 2);
 		capabilities.setCapability("bundleId", "com.apple.Preferences");
 		try {
