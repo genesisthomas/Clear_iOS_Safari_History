@@ -165,7 +165,7 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.16</version>
 		</dependency>
-		<dependency>
+	<!-- 	<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-api</artifactId>
 			<version>3.6.0</version>
@@ -174,7 +174,7 @@
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-support</artifactId>
 			<version>3.6.0</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
@@ -193,7 +193,7 @@
 		<dependency>
 			<groupId>io.appium</groupId>
 			<artifactId>java-client</artifactId>
-			<version>5.0.4</version>
+			<version>6.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>

@@ -14,6 +14,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.ios.IOSTouchAction;
+import io.appium.java_client.touch.LongPressOptions;
+import io.appium.java_client.touch.offset.ElementOption;
 
 public class Utils {
 	public static String fetchCloudName(String cloudName) throws Exception {
@@ -115,11 +118,16 @@ public class Utils {
 		while(i <1) {
 			switchToContext(driver, "NATIVE_APP");
 			WebElement browserTab = driver.findElementByXPath("//*[@label=\"Tabs\"]");
-			TouchAction action = new TouchAction(driver);
-			action.longPress(browserTab).press(browserTab);
-			action.perform();
-			action.longPress(browserTab).release();
-			action.perform();
+			IOSTouchAction touch = new IOSTouchAction (driver);
+			touch.longPress(LongPressOptions.longPressOptions()
+			                .withElement (ElementOption.element (browserTab)))
+			              .perform ();
+			
+//			TouchAction action = new TouchAction(driver);
+//			action.longPress((ElementOption)browserTab).press((ElementOption)browserTab);
+//			action.perform();
+//			action.longPress((ElementOption)browserTab).release();
+//			action.perform();
 			try {
 				driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 				WebElement closeAll = driver.findElementByXPath("//*[contains(@label,'Close All') and @visible='true']");
