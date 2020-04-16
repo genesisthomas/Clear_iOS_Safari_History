@@ -29,7 +29,7 @@
 			<class name="com.perfecto.sampleproject.ClearHistoryiOS" />
 		</classes>
 	</test> <!-- Test -->
-	<test name="iphone13" enabled="false">
+	<test name="iphone13" enabled="true">
 		<parameter name="model" value="iPhone.*"></parameter>
 		<parameter name="version" value="13.*"></parameter>
 		<classes>
