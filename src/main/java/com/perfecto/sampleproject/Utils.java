@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DriverCommand;
 import org.openqa.selenium.remote.RemoteExecuteMethod;
@@ -113,21 +114,20 @@ public class Utils {
 		Map<String, Object> params = new HashMap<>();
 		params.put("identifier", "com.apple.mobilesafari");
 		driver.executeScript("mobile:application:open", params);
-
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		
 		int i = 0;
 		while(i <1) {
 			switchToContext(driver, "NATIVE_APP");
+
+			try {
+				driver.findElementByXPath("//*[@label=\"Done\"]").click();
+			}catch(Exception e) {}
 			WebElement browserTab = driver.findElementByXPath("//*[@label=\"Tabs\"]");
 			IOSTouchAction touch = new IOSTouchAction (driver);
 			touch.longPress(LongPressOptions.longPressOptions()
 			                .withElement (ElementOption.element (browserTab)))
 			              .perform ();
-			
-//			TouchAction action = new TouchAction(driver);
-//			action.longPress((ElementOption)browserTab).press((ElementOption)browserTab);
-//			action.perform();
-//			action.longPress((ElementOption)browserTab).release();
-//			action.perform();
 			try {
 				driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 				WebElement closeAll = driver.findElementByXPath("//*[contains(@label,'Close All') and @visible='true']");
